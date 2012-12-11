@@ -1,0 +1,2 @@
+require 'heroku/forward'
+
