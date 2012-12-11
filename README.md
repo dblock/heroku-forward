@@ -36,7 +36,7 @@ require 'bundler'
 $stdout.sync = true
 Bundler.require(:rack)
 
-port = (ARGV.first || 3000).to_i
+port = (ARGV.first || ENV['PORT'] || 3000).to_i
 env = ENV['RACK_ENV'] || 'development'
 
 require 'em-proxy'
@@ -58,11 +58,35 @@ Foreman
 Heroku Cedar expects a `Procfile` that defines your application processes.
 
 ```
-web: bundle exec ruby config.ru $PORT
+web: bundle exec ruby config.ru
 worker: bundle exec rake jobs:work
 ```
 
 You can use `foreman` to test the proxy locally with `foreman start web`.
+
+Heroku Log
+----------
+
+Here's the log output from an application that uses this gem. Notice that Heroku reports the state of `web.1` up after just 4 seconds, while the application takes 67 seconds to boot.
+
+```
+2012-12-11T23:33:42+00:00 heroku[web.1]: Starting process with command `bundle exec ruby config.ru`
+2012-12-11T23:33:46+00:00 app[web.1]:  INFO -- : Launching Backend ...
+2012-12-11T23:33:46+00:00 app[web.1]:  INFO -- : Launching Proxy Server at 0.0.0.0:42017 ...
+2012-12-11T23:33:46+00:00 app[web.1]: DEBUG -- : Attempting to connect to /tmp/thin20121211-2-1bfazzx.
+2012-12-11T23:33:46+00:00 app[web.1]:  WARN -- : no connection, 10 retries left.
+2012-12-11T23:33:46+00:00 heroku[web.1]: State changed from starting to up
+2012-12-11T23:34:32+00:00 app[web.1]: >> Thin web server (v1.5.0 codename Knife)
+2012-12-11T23:34:32+00:00 app[web.1]: >> Maximum connections set to 1024
+2012-12-11T23:34:32+00:00 app[web.1]: >> Listening on /tmp/thin20121211-2-1bfazzx, CTRL+C to stop
+2012-12-11T23:34:43+00:00 app[web.1]: DEBUG -- : Attempting to connect to /tmp/thin20121211-2-1bfazzx.
+2012-12-11T23:34:43+00:00 app[web.1]: DEBUG -- : Proxy Server ready at 0.0.0.0:42017 (67s).
+```
+
+Fail-Safe
+---------
+
+If you're worried about this implementation, consider building a fail-safe. Modify your `config.ru` to run without a proxy if `DISABLE_FORWARD_PROXY` is set as in [this gist](https://gist.github.com/4263488). Add `DISABLE_FORWARD_PROXY` via `heroku config:add DISABLE_FORWARD_PROXY=1`.
 
 Sources
 -------
