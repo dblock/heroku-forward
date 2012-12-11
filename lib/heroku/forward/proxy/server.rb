@@ -9,7 +9,7 @@ module Heroku
         def initialize(backend, options = {})
           @host = options[:host] || '0.0.0.0'
           @port = options[:port] || 3000
-          @retires = options[:retries] || 10
+          @retries = options[:retries] || 10
           @backend = backend
         end
 

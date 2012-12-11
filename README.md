@@ -20,7 +20,49 @@ gem "heroku-forward"
 gem "em-proxy", :git => "https://github.com/igrigorik/em-proxy.git"
 ```
 
-WIP
+Create an application rackup file, eg. `app.ru` that boots your application. Under Rails, this is the file that calls `run`.
+
+``` ruby
+require ::File.expand_path('../config/environment',  __FILE__)
+run MyApp::Application
+```
+
+Modify your rackup file as follows. Under Rails this file is called `config.ru`.
+
+``` ruby
+require 'rubygems'
+require 'bundler'
+
+$stdout.sync = true
+Bundler.require(:rack)
+
+port = (ARGV.first || 3000).to_i
+env = ENV['RACK_ENV'] || 'development'
+
+require 'em-proxy'
+require 'logger'
+require 'heroku-forward'
+
+application = File.expand_path('../app.ru', __FILE__)
+backend = Heroku::Forward::Backends::Thin.new(application: application, env: env)
+proxy = Heroku::Forward::Proxy::Server.new(backend, { host: '0.0.0.0', port: port })
+proxy.logger = Logger.new(STDOUT)
+proxy.forward!
+```
+
+This sets up a proxy on the port requested by Heroku and runs your application with Thin.
+
+Foreman
+-------
+
+Heroku Cedar expects a `Procfile` that defines your application processes.
+
+```
+web: bundle exec ruby config.ru $PORT
+worker: bundle exec rake jobs:work
+```
+
+You can use `foreman` to test the proxy locally with `foreman start web`.
 
 Sources
 -------
