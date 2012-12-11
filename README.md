@@ -6,9 +6,9 @@ Beat Heroku's 60 seconds timeout with a forward proxy.
 What's this?
 ------------
 
-Heroku will report an application crashing and yield an `R10 Boot Timeout` error when a web process took longer than 60 seconds to bind to its assigned `$PORT`. This error is often caused by a process being unable to reach an external resource, such as a database or because Heroku is pretty slow and you have a lot of gems in your `Gemfile`.
+[Heroku](http://www.heroku.com/) will report an application crashing and yield an `R10 Boot Timeout` error when a web process took longer than 60 seconds to bind to its assigned `$PORT`. This error is often caused by a process being unable to reach an external resource, such as a database or because Heroku is pretty slow and you have a lot of gems in your `Gemfile`.
 
-This gem implements a forward proxy. The proxy is booted almost immediately, binding to the port assigned by Heroku. It then spawns your application's web server and establishes a connection over a unix domain socket (a file) between the proxy and the application. Once the application is up, it will be able to serve HTTP requests normally. Until then requests may queue and timeout.
+This gem implements a forward proxy using [em-proxy](https://github.com/igrigorik/em-proxy). This proxy is booted almost immediately, binding to the port assigned by Heroku. Heroku now reports the dyno up. The proxy then spawns your application's web server and establishes a connection over a unix domain socket (a file) between the proxy and the application. Once the application is ready, it will be able to serve HTTP requests normally. Until then requests may queue and some may timeout depending on how long it actually takes to start.
 
 Usage
 -----
@@ -20,7 +20,7 @@ gem "heroku-forward", :git => "https://github.com/dblock/heroku-forward.git"
 gem "em-proxy", :git => "https://github.com/igrigorik/em-proxy.git"
 ```
 
-Create an application rackup file, eg. `app.ru` that boots your application. Under Rails, this is the file that calls `run`.
+Create an application rackup file, eg. `my_app.ru` that boots your application. Under Rails, this is the file that calls `run`.
 
 ``` ruby
 require ::File.expand_path('../config/environment',  __FILE__)
@@ -43,7 +43,7 @@ require 'em-proxy'
 require 'logger'
 require 'heroku-forward'
 
-application = File.expand_path('../app.ru', __FILE__)
+application = File.expand_path('../my_app.ru', __FILE__)
 backend = Heroku::Forward::Backends::Thin.new(application: application, env: env)
 proxy = Heroku::Forward::Proxy::Server.new(backend, { host: '0.0.0.0', port: port })
 proxy.logger = Logger.new(STDOUT)
@@ -79,21 +79,23 @@ Here's the log output from an application that uses this gem. Notice that Heroku
 2012-12-11T23:34:32+00:00 app[web.1]: >> Thin web server (v1.5.0 codename Knife)
 2012-12-11T23:34:32+00:00 app[web.1]: >> Maximum connections set to 1024
 2012-12-11T23:34:32+00:00 app[web.1]: >> Listening on /tmp/thin20121211-2-1bfazzx, CTRL+C to stop
-2012-12-11T23:34:43+00:00 app[web.1]: DEBUG -- : Attempting to connect to /tmp/thin20121211-2-1bfazzx.
-2012-12-11T23:34:43+00:00 app[web.1]: DEBUG -- : Proxy Server ready at 0.0.0.0:42017 (67s).
+2012-12-11T23:34:53+00:00 app[web.1]: DEBUG -- : Attempting to connect to /tmp/thin20121211-2-1bfazzx.
+2012-12-11T23:34:53+00:00 app[web.1]: DEBUG -- : Proxy Server ready at 0.0.0.0:42017 (67s).
 ```
 
 Fail-Safe
 ---------
 
-If you're worried about this implementation, consider building a fail-safe. Modify your `config.ru` to run without a proxy if `DISABLE_FORWARD_PROXY` is set as in [this gist](https://gist.github.com/4263488). Add `DISABLE_FORWARD_PROXY` via `heroku config:add DISABLE_FORWARD_PROXY=1`.
+If you're worried about this implementation, consider building a fail-safe. Modify your `config.ru` to run without a proxy if `DISABLE_FORWARD_PROXY` is set as demonstrated in [this gist](https://gist.github.com/4263488). Add `DISABLE_FORWARD_PROXY` via `heroku config:add DISABLE_FORWARD_PROXY=1`.
 
-Sources
--------
+Reading Materials
+-----------------
 
-* [Heroky R10 Boot Timeout](https://devcenter.heroku.com/articles/error-codes#r10-boot-timeout)
+* [Heroku R10 Boot Timeout](https://devcenter.heroku.com/articles/error-codes#r10-boot-timeout)
 * [Beating Heroku's 60s Boot Times with the Cedar Stack and a Reverse Proxy](http://noverloop.be/beating-herokus-60s-boot-times-with-the-cedar-stack-and-a-reverse-proxy/) by Nicolas Overloop
 * [Fighting the Unicorns: Becoming a Thin Wizard on Heroku](http://jgwmaxwell.com/fighting-the-unicorns-becoming-a-thin-wizard-on-heroku/) by JGW Maxwell
+* [eventmachine](https://github.com/eventmachine/eventmachine)
+* [em-proxy](https://github.com/igrigorik/em-proxy)
 
 Contributing
 ------------
@@ -105,4 +107,4 @@ Copyright and License
 
 MIT License, see [LICENSE](http://github.com/dblock/heroku-forward/raw/master/LICENSE.md) for details.
 
-(c) 2012 [Daniel Doubrovkine](http://github.com/dblock), [Art.sy](http://art.sy)
+(c) 2012 [Daniel Doubrovkine](http://github.com/dblock), [Art.sy](http://artsy.github.com)
