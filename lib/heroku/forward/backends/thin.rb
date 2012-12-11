@@ -2,7 +2,6 @@ module Heroku
   module Forward
     module Backends
       class Thin
-
         attr_accessor :application
         attr_accessor :socket
         attr_accessor :environment

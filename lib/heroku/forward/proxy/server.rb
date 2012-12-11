@@ -73,7 +73,7 @@ module Heroku
               if start
                 logger.debug "Attempting to connect to #{backend.socket}." if logger
               end
-              conn.server backend, socket: backend.socket
+              conn.server backend, :socket => backend.socket
               if @start
                 logger.debug "Proxy Server ready at #{host}:#{port} (#{(Time.now - start).to_i}s)." if logger
                 @start = nil
