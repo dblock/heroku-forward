@@ -16,7 +16,7 @@ Usage
 Add `heroku-forward` and `em-proxy` to your `Gemfile`. Curently requires HEAD of `em-proxy` because of [this pull request](https://github.com/igrigorik/em-proxy/pull/31).
 
 ``` ruby
-gem "heroku-forward"
+gem "heroku-forward", :git => "https://github.com/dblock/heroku-forward.git"
 gem "em-proxy", :git => "https://github.com/igrigorik/em-proxy.git"
 ```
 
