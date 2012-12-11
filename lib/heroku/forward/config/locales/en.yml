@@ -1,0 +1,17 @@
+en:
+  heroku:
+    forward:
+      errors:
+        messages:
+          missing_backend_option:
+            message: "Missing backend option: %{name}."
+            summary: "A required option was not provided to the back-end."
+            resolution: "Review the documentation for the back-end that you're trying to proxy to."
+          missing_backend_application:
+            message: "Missing backend application in '%{path}'."
+            summary: "The file supplied to the back-end in the 'application' option is invalid."
+            resolution: "This is typically a file called 'myapp.ru', for Rails applications it will contain a call to 'MyApp::Application.initialize!'."
+          backend_failed_to_start:
+            message: "The back-end failed to start in a timely fashion."
+            summary: "The proxy started, but failed to connect to the back-end after retrying multiple times."
+            resolution: "Check that your application can start without the proxy and serve HTTP requests."
