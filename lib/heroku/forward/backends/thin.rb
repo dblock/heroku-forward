@@ -2,6 +2,8 @@ module Heroku
   module Forward
     module Backends
       class Thin
+        include POSIX::Spawn
+
         attr_accessor :application
         attr_accessor :socket
         attr_accessor :environment
@@ -39,7 +41,7 @@ module Heroku
 
           def new_socket
             Tempfile.open 'thin' do |file|
-              @socket = file.path
+              return file.path
             end
           end
 

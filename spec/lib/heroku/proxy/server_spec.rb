@@ -29,7 +29,7 @@ describe Heroku::Forward::Proxy::Server do
     it "waits for delay seconds" do
       EM::Server.run(server) do
         server.should_receive(:sleep).with(2)
-        server.forward!(delay: 2)
+        server.forward!(:delay => 2)
       end
     end
 

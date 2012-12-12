@@ -2,6 +2,7 @@ source "http://rubygems.org"
 
 gem "em-proxy", :git => "https://github.com/igrigorik/em-proxy.git"
 gem "i18n", "~> 0.6"
+gem "posix-spawn"
 
 group :development, :test do
   gem "rake", "~> 10.0"
