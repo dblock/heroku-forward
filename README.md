@@ -1,5 +1,5 @@
-Heroku::Foward [![Build Status](https://travis-ci.org/dblock/heroku-forward.png?branch=master)](https://travis-ci.org/dblock/heroku-forward)
-==============
+Heroku::Forward [![Build Status](https://travis-ci.org/dblock/heroku-forward.png?branch=master)](https://travis-ci.org/dblock/heroku-forward)
+===============
 
 Beat Heroku's 60 seconds timeout with a forward proxy.
 
