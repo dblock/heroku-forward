@@ -29,6 +29,11 @@ module Heroku
 
           backend.spawn!
 
+          if options[:delay] && (delay = options[:delay].to_i) > 0
+            logger.info "Waiting #{delay}s to Launch Proxy Server ..." if logger
+            sleep delay
+          end
+
           logger.info "Launching Proxy Server at #{host}:#{port} ..." if logger
 
           s = self

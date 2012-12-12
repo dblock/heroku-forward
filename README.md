@@ -83,6 +83,13 @@ Here's the log output from an application that uses this gem. Notice that Heroku
 2012-12-11T23:34:53+00:00 app[web.1]: DEBUG -- : Proxy Server ready at 0.0.0.0:42017 (67s).
 ```
 
+Proxy Forwarding Options
+------------------------
+
+`Heroku::Forward::Proxy::Server.forward!` accepts the following options:
+
+* `delay`: number of seconds to sleep before launching the proxy, eg. `proxy.forward!(delay: 15)`. This prevents queuing of requests or reporting invalid `up` status to Heroku. It's recommended to set this value to as close as possible to the boot time of your application and less than the Heroku's 60s boot limit.
+
 Fail-Safe
 ---------
 

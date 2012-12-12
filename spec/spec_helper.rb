@@ -5,3 +5,5 @@ require 'heroku-forward'
 require 'em-proxy'
 require 'em-http'
 require 'logger'
+
+require 'support/em_server'

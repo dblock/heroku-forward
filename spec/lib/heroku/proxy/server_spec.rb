@@ -21,18 +21,18 @@ describe Heroku::Forward::Proxy::Server do
     end
 
     it "proxy!" do
-      connected = false
-      EM.run do
-        EventMachine.add_timer(1) do
-          EventMachine::HttpRequest.new('http://127.0.0.1:4242/').get({ :timeout => 1 })
-        end
-        server.on_connect do
-          connected = true
-          server.stop!
-        end
+      EM::Server.run(server) do
         server.forward!
       end
     end
+
+    it "waits for delay seconds" do
+      EM::Server.run(server) do
+        server.should_receive(:sleep).with(2)
+        server.forward!(delay: 2)
+      end
+    end
+
   end
 
 end
