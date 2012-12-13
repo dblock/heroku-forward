@@ -16,8 +16,8 @@ Usage
 Add `heroku-forward` and `em-proxy` to your `Gemfile`. Curently requires HEAD of `em-proxy` because of [this pull request](https://github.com/igrigorik/em-proxy/pull/31).
 
 ``` ruby
-gem "heroku-forward", :git => "https://github.com/dblock/heroku-forward.git"
-gem "em-proxy", :git => "https://github.com/igrigorik/em-proxy.git"
+gem "heroku-forward", "~> 0.1"
+gem "em-proxy", ">= 0.1.8"
 ```
 
 Create an application rackup file, eg. `my_app.ru` that boots your application. Under Rails, this is the file that calls `run`.
