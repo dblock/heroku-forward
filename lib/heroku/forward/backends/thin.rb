@@ -9,20 +9,41 @@ module Heroku
         attr_accessor :environment
         attr_accessor :pid
 
+        attr_accessor :ssl
+        attr_accessor :ssl_key_file
+        attr_accessor :ssl_cert_file
+        attr_accessor :ssl_verify
+
         # options:
-        #  application: passed with -R, eg. app.ru
-        #  socket: passed with --socket, eg. /tmp/thin.sock
-        #  env: passed with -e, defaults to 'development'
+        #  application:   passed with     -R, eg. app.ru
+        #  socket:        passed with     --socket, eg. /tmp/thin.sock
+        #  env:           passed with     -e, defaults to 'development'
+        #  ssl:           activated with  --ssl
+        #  ssl_key_file:  passed with     ssl_key_file PATH
+        #  ssl_cert_file: passed with     ssl_cert_file PATH
+        #  ssl_verify:    activated with  ssl_verify
         def initialize(options = {})
           @application = options[:application]
           @socket = options[:socket] || new_socket
           @env = options[:env] || :development
+
+          @ssl = options[:ssl] || false
+          @ssl_key_file = options[:ssl_key_file] || false
+          @ssl_cert_file = options[:ssl_cert_file] || false
+          @ssl_verify = options[:ssl_verify] || false
         end
 
         def spawn!
           return false if spawned?
           check!
-          @pid = spawn("thin start -R #{@application} --socket #{@socket} -e #{@env}")
+
+          spawn_with = "thin start -R #{@application} --socket #{@socket} -e #{@env}"
+          spawn_with << " --ssl" if @ssl
+          spawn_with << " --ssl-key-file #{@ssl_key_file}" if @ssl_key_file
+          spawn_with << " --ssl-cert-file #{@ssl_cert_file}" if @ssl_cert_file
+          spawn_with << " --ssl-verify" if @ssl_verify
+
+          @pid = spawn(spawn_with)
           @spawned = true
         end
 
