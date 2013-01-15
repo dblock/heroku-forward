@@ -134,6 +134,7 @@ Reading Materials
 * [Fighting the Unicorns: Becoming a Thin Wizard on Heroku](http://jgwmaxwell.com/fighting-the-unicorns-becoming-a-thin-wizard-on-heroku/) by JGW Maxwell
 * [eventmachine](https://github.com/eventmachine/eventmachine)
 * [em-proxy](https://github.com/igrigorik/em-proxy)
+* [Setup rails 3.2 & heroku-forward with SSL](https://gist.github.com/4540602)
 
 Contributing
 ------------
