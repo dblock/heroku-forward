@@ -90,6 +90,37 @@ Proxy Forwarding Options
 
 * `delay`: number of seconds to sleep before launching the proxy, eg. `proxy.forward!(delay: 15)`. This prevents queuing of requests or reporting invalid `up` status to Heroku. It's recommended to set this value to as close as possible to the boot time of your application and less than the Heroku's 60s boot limit.
 
+SSL
+---
+Heroku-forward has SSL support by forwarding SSL arguments to thin. Know more about thin & ssl :
+```sh
+thin -h
+SSL options:
+        --ssl                        Enables SSL
+        --ssl-key-file PATH          Path to private key
+        --ssl-cert-file PATH         Path to certificate
+        --ssl-verify                 Enables SSL certificate verification
+```
+
+In order to forward SSL arguments to thin update your config.ru
+```ruby
+options = { application: File.expand_path('../my_app.ru', __FILE__) }
+# branch to desable SSL depending of your environment
+if ENV['THIN_SSL_ENABLED']
+  options[:ssl] = true
+  options[:ssl_verify] = true
+  options[:ssl_cert_file] = ENV['THIN_SSL_CERT_FILE']
+  options[:ssl_key_file] = ENV['THIN_SSL_KEY_FILE']
+end
+
+backend = Heroku::Forward::Backends::Thin.new(options)
+```
+
+Then it will launch like this :
+```sh
+thin start -R $application --socket $socket -e $env --ssl --ssl-key-file ENV['THIN_SSL_KEY_FILE'] --ssl-cert-file ENV['THIN_SSL_CERT_FILE'] --ssl-verify"
+```
+
 Fail-Safe
 ---------
 
