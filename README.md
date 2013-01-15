@@ -92,7 +92,8 @@ Proxy Forwarding Options
 
 SSL
 ---
-Heroku-forward has SSL support by forwarding SSL arguments to thin. Know more about thin & ssl :
+Heroku-forward has SSL support by forwarding SSL arguments to Thin. Know more about Thin & SSL:
+
 ```sh
 thin -h
 SSL options:
@@ -103,8 +104,10 @@ SSL options:
 ```
 
 In order to forward SSL arguments to thin update your config.ru
+
 ```ruby
 options = { application: File.expand_path('../my_app.ru', __FILE__) }
+
 # branch to desable SSL depending of your environment
 if ENV['THIN_SSL_ENABLED']
   options[:ssl] = true
@@ -114,11 +117,6 @@ if ENV['THIN_SSL_ENABLED']
 end
 
 backend = Heroku::Forward::Backends::Thin.new(options)
-```
-
-Then it will launch like this :
-```sh
-thin start -R $application --socket $socket -e $env --ssl --ssl-key-file ENV['THIN_SSL_KEY_FILE'] --ssl-cert-file ENV['THIN_SSL_CERT_FILE'] --ssl-verify"
 ```
 
 Fail-Safe
