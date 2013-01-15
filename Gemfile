@@ -2,7 +2,8 @@ source "http://rubygems.org"
 
 gem "em-proxy", ">= 0.1.8"
 gem "i18n", "~> 0.6"
-gem "posix-spawn", "~> 0.3"
+gem "ffi"
+gem "spoon", "~> 0.0.1"
 
 group :development, :test do
   gem "rake", "~> 10.0"

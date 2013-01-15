@@ -2,8 +2,6 @@ module Heroku
   module Forward
     module Backends
       class Thin
-        include POSIX::Spawn
-
         attr_accessor :application
         attr_accessor :socket
         attr_accessor :environment
@@ -37,13 +35,17 @@ module Heroku
           return false if spawned?
           check!
 
-          spawn_with = "thin start -R #{@application} --socket #{@socket} -e #{@env}"
-          spawn_with << " --ssl" if @ssl
-          spawn_with << " --ssl-key-file #{@ssl_key_file}" if @ssl_key_file
-          spawn_with << " --ssl-cert-file #{@ssl_cert_file}" if @ssl_cert_file
-          spawn_with << " --ssl-verify" if @ssl_verify
+          spawn_with = [ "thin" ]
+          spawn_with.push "start"
+          spawn_with.push "-R", @application
+          spawn_with.push "--socket", @socket
+          spawn_with.push "-e", @env.to_s
+          spawn_with.push "--ssl" if @ssl
+          spawn_with.push " --ssl-key-file", @ssl_key_file if @ssl_key_file
+          spawn_with.push "--ssl-cert-file", @ssl_cert_file if @ssl_cert_file
+          spawn_with.push "--ssl-verify" if @ssl_verify
 
-          @pid = spawn(spawn_with)
+          @pid = Spoon.spawnp(* spawn_with)
           @spawned = true
         end
 
