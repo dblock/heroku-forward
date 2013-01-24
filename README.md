@@ -19,14 +19,14 @@ Add `heroku-forward` to your `Gemfile`.
 gem "heroku-forward", "~> 0.2"
 ```
 
-Create an application rackup file, eg. `my_app.ru` that boots your application. Under Rails, this is the file that calls `run`.
+Create a new application rackup file, eg. `my_app.ru` that boots your application. Under Rails, this is the file that calls `run`.
 
 ``` ruby
 require ::File.expand_path('../config/environment',  __FILE__)
 run MyApp::Application
 ```
 
-Modify your rackup file as follows. Under Rails this file is called `config.ru`.
+Modify your default rackup file as follows. Under Rails this file is called `config.ru`.
 
 ``` ruby
 require 'rubygems'
@@ -41,15 +41,16 @@ env = ENV['RACK_ENV'] || 'development'
 require 'em-proxy'
 require 'logger'
 require 'heroku-forward'
+require 'heroku/forward/backends/thin'
 
 application = File.expand_path('../my_app.ru', __FILE__)
 backend = Heroku::Forward::Backends::Thin.new(application: application, env: env)
-proxy = Heroku::Forward::Proxy::Server.new(backend, { host: '0.0.0.0', port: port })
+proxy = Heroku::Forward::Proxy::Server.new(backend, host: '0.0.0.0', port: port)
 proxy.logger = Logger.new(STDOUT)
 proxy.forward!
 ```
 
-This sets up a proxy on the port requested by Heroku and runs your application with Thin.
+This sets up a proxy on the port requested by Heroku and runs your application with [Thin](http://code.macournoyer.com/thin).
 
 Foreman
 -------
@@ -87,7 +88,7 @@ Proxy Forwarding Options
 
 `Heroku::Forward::Proxy::Server.forward!` accepts the following options:
 
-* `delay`: number of seconds to sleep before launching the proxy, eg. `proxy.forward!(delay: 15)`. This prevents queuing of requests or reporting invalid `up` status to Heroku. It's recommended to set this value to as close as possible to the boot time of your application and less than the Heroku's 60s boot limit.
+* **delay**: number of seconds to sleep before launching the proxy, eg. `proxy.forward!(delay: 15)`. This prevents queuing of requests or reporting invalid `up` status to Heroku. It's recommended to set this value to as close as possible to the boot time of your application and less than the Heroku's 60s boot limit.
 
 SSL
 ---
@@ -117,6 +118,28 @@ end
 
 backend = Heroku::Forward::Backends::Thin.new(options)
 ```
+
+Alternative Backends
+--------------------
+
+Backend implementations for both [Thin](http://code.macournoyer.com/thin) and [Unicorn](http://unicorn.bogomips.org/) are provided. Your rackup file must `require` the chosen backend in addition to `heroku-forward` and invoke as follows:
+
+```ruby
+
+# ...
+
+require 'heroku-forward'
+require 'heroku/forward/backends/unicorn'
+
+application = File.expand_path('../my_app.ru', __FILE__)
+config_file = File.expand_path('../config/unicorn.rb', __FILE__)
+backend = Heroku::Forward::Backends::Unicorn.new(application: application, env: env, config_file: config_file)
+proxy = Heroku::Forward::Proxy::Server.new(backend, host: '0.0.0.0', port: port)
+proxy.logger = Logger.new(STDOUT)
+proxy.forward!
+```
+
+
 
 Fail-Safe
 ---------
