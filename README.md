@@ -88,7 +88,7 @@ Proxy Forwarding Options
 
 `Heroku::Forward::Proxy::Server.forward!` accepts the following options:
 
-* **delay**: number of seconds to sleep before launching the proxy, eg. `proxy.forward!(delay: 15)`. This prevents queuing of requests or reporting invalid `up` status to Heroku. It's recommended to set this value to as close as possible to the boot time of your application and less than the Heroku's 60s boot limit.
+* **delay**: number of seconds to sleep before launching the proxy, eg. `proxy.forward!(delay: 15)`. This prevents queuing of requests or reporting invalid `up` status to Heroku. It's recommended to set this value to as close as possible to the boot time of your application and less than the Heroku's 60s boot limit. Also note that the proxy itself needs time to boot.
 
 Available Backends
 ------------------
@@ -108,8 +108,8 @@ proxy.forward!
 
 The Thin back-end supports the following options.
 
-* *application*: application to load
-* *env*: environment, eg. `:development`
+* **application**: application to load
+* **env**: environment, eg. `:development`
 
 SSL is also supported.
 
