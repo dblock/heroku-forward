@@ -16,7 +16,7 @@ Usage
 Add `heroku-forward` to your `Gemfile`.
 
 ``` ruby
-gem "heroku-forward", "~> 0.2"
+gem "heroku-forward"
 ```
 
 Create a new application rackup file, eg. `my_app.ru` that boots your application. Under Rails, this is the file that calls `run`.
@@ -50,7 +50,7 @@ proxy.logger = Logger.new(STDOUT)
 proxy.forward!
 ```
 
-This sets up a proxy on the port requested by Heroku and runs your application with [Thin](http://code.macournoyer.com/thin).
+This sets up a proxy on the port requested by Heroku and runs your application with [Thin](http://code.macournoyer.com/thin). Other back-ends are also supported, see below.
 
 Foreman
 -------
@@ -93,9 +93,9 @@ Proxy Forwarding Options
 Available Backends
 ------------------
 
-## Thin
+### Thin
 
-For more information about Thin see [http://code.macournoyer.com/thin](http://code.macournoyer.com/thin)
+For more information about Thin see [http://code.macournoyer.com/thin](http://code.macournoyer.com/thin).
 
 ``` ruby
 require 'heroku/forward/backends/thin'
@@ -113,10 +113,10 @@ The Thin back-end supports the following options.
 
 SSL is also supported.
 
-* *ssl*: enable SSL
-* *ssl-key-file*: path to private key
-* *ssl-cert-file*: path to certificate
-* *ssl-verify*: enable SSL certificate verification
+* **ssl**: enable SSL
+* **ssl-key-file**: path to private key
+* **ssl-cert-file**: path to certificate
+* **ssl-verify**: enable SSL certificate verification
 
 ```ruby
 options = { application: File.expand_path('../my_app.ru', __FILE__) }
@@ -132,15 +132,15 @@ end
 backend = Heroku::Forward::Backends::Thin.new(options)
 ```
 
-## Unicorn
+### Unicorn
 
 For more information about Unicorn see [http://unicorn.bogomips.org](http://unicorn.bogomips.org/).
 
 The Unicorn back-end supports the following options.
 
-* *application*: application to load
-* *env*: environment, eg. `:development`
-* *config_file*: Unicorn configuration file
+* **application**: application to load
+* **env**: environment, eg. `:development`
+* **config_file**: Unicorn configuration file
 
 ```ruby
 require 'heroku-forward'
@@ -156,7 +156,7 @@ proxy.forward!
 Fail-Safe
 ---------
 
-If you're worried about this implementation, consider building a fail-safe. Modify your `config.ru` to run without a proxy if `DISABLE_FORWARD_PROXY` is set as demonstrated in [this gist](https://gist.github.com/4263488). Add `DISABLE_FORWARD_PROXY` via `heroku config:add DISABLE_FORWARD_PROXY=1`.
+If you're worried about always using heroku-forward, consider building a fail-safe. Modify your `config.ru` to run without a proxy if `DISABLE_FORWARD_PROXY` is set as demonstrated in [this gist](https://gist.github.com/4263488). Add `DISABLE_FORWARD_PROXY` via `heroku config:add DISABLE_FORWARD_PROXY=1`.
 
 Reading Materials
 -----------------
