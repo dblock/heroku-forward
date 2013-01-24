@@ -40,12 +40,13 @@ describe Heroku::Forward::Backends::Unicorn do
       Heroku::Forward::Backends::Unicorn.new(
         :application => 'spec/support/app.ru',
         :env => 'test',
+        :socket => '/tmp/unicorn.sock',
         :config_file => 'spec/support/unicorn.rb'
       )
     end
 
     it "forwards arguments to spawner" do
-      backend.expects(:spawn).with("unicorn --env test --config-file spec/support/unicorn.rb --listen foobar spec/support/app.ru").returns(0)
+      Spoon.should_receive(:spawnp).with(*%w{unicorn --env test --config-file spec/support/unicorn.rb --listen /tmp/unicorn.sock spec/support/app.ru}).and_return(0)
       backend.spawn!
     end
 
