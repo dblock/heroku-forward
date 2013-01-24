@@ -22,7 +22,7 @@ module Heroku
         #  ssl_verify:    activated with  ssl_verify
         def initialize(options = {})
           @application = options[:application]
-          @socket = options[:socket] || new_socket
+          @socket = options[:socket] || Heroku::Forward::Utils.tmp_filename('thin', '.sock')
           @env = options[:env] || :development
 
           @ssl = options[:ssl] || false
@@ -62,16 +62,10 @@ module Heroku
 
         private
 
-          def new_socket
-            Tempfile.open 'thin' do |file|
-              return file.path
-            end
-          end
-
-          def check!
-            raise Heroku::Forward::Errors::MissingBackendOptionError.new('application') unless @application && @application.length > 0
-            raise Heroku::Forward::Errors::MissingBackendApplicationError.new(@application) unless File.exists?(@application)
-          end
+        def check!
+          raise Heroku::Forward::Errors::MissingBackendOptionError.new('application') unless @application && @application.length > 0
+          raise Heroku::Forward::Errors::MissingBackendApplicationError.new(@application) unless File.exists?(@application)
+        end
 
       end
     end

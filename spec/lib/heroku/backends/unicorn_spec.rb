@@ -3,35 +3,41 @@ require 'heroku/forward/backends/unicorn'
 
 describe Heroku::Forward::Backends::Unicorn do
 
-  let(:backend) do
-    Heroku::Forward::Backends::Unicorn.new
-  end
-
-  it "#spawned?" do
-    backend.spawned?.should be_false
-  end
-
-  context "checks" do
-    it "checks for application" do
-      expect {
-        backend.spawn!
-      }.to raise_error Heroku::Forward::Errors::MissingBackendOptionError
+  describe "with defaults" do
+    let(:backend) do
+      Heroku::Forward::Backends::Unicorn.new
+    end
+  
+    after do
+      backend.terminate!
     end
 
-    it "checks that the application file exists" do
-      expect {
-        backend.application = 'spec/foobar'
-        backend.spawn!
-      }.to raise_error Heroku::Forward::Errors::MissingBackendApplicationError
+    it "#spawned?" do
+      backend.spawned?.should be_false
     end
 
-  end
+    context "checks" do
+      it "checks for application" do
+        expect {
+          backend.spawn!
+        }.to raise_error Heroku::Forward::Errors::MissingBackendOptionError
+      end
 
-  it "#spawn!" do
-    backend.application = "spec/support/app.ru"
-    backend.spawn!.should_not == 0
-    sleep 2
-    backend.terminate!.should be_true
+      it "checks that the application file exists" do
+        expect {
+          backend.application = 'spec/foobar'
+          backend.spawn!
+        }.to raise_error Heroku::Forward::Errors::MissingBackendApplicationError
+      end
+
+    end
+
+    it "#spawn!" do
+      backend.application = "spec/support/app.ru"
+      backend.spawn!.should_not == 0
+      sleep 2
+      backend.terminate!.should be_true
+    end
   end
   
   context "constructs command" do
