@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "heroku-forward"
-  s.version = "0.2.0"
+  s.version = "0.3.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Daniel Doubrovkine"]
@@ -52,7 +52,6 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<thin>, ["~> 1.5"])
       s.add_development_dependency(%q<unicorn>, ["~> 4.5"])
       s.add_development_dependency(%q<em-http-request>, ["~> 1.0"])
-      s.add_development_dependency(%q<mocha>, [">= 0"])
     else
       s.add_dependency(%q<em-proxy>, [">= 0.1.8"])
       s.add_dependency(%q<i18n>, ["~> 0.6"])
@@ -65,7 +64,6 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<thin>, ["~> 1.5"])
       s.add_dependency(%q<unicorn>, ["~> 4.5"])
       s.add_dependency(%q<em-http-request>, ["~> 1.0"])
-      s.add_dependency(%q<mocha>, [">= 0"])
     end
   else
     s.add_dependency(%q<em-proxy>, [">= 0.1.8"])
@@ -79,7 +77,6 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<thin>, ["~> 1.5"])
     s.add_dependency(%q<unicorn>, ["~> 4.5"])
     s.add_dependency(%q<em-http-request>, ["~> 1.0"])
-    s.add_dependency(%q<mocha>, [">= 0"])
   end
 end
 

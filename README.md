@@ -90,20 +90,33 @@ Proxy Forwarding Options
 
 * **delay**: number of seconds to sleep before launching the proxy, eg. `proxy.forward!(delay: 15)`. This prevents queuing of requests or reporting invalid `up` status to Heroku. It's recommended to set this value to as close as possible to the boot time of your application and less than the Heroku's 60s boot limit.
 
-SSL
----
-Heroku-forward has SSL support by forwarding SSL arguments to Thin. Know more about Thin & SSL:
+Available Backends
+------------------
 
-```sh
-thin -h
-SSL options:
-        --ssl                        Enables SSL
-        --ssl-key-file PATH          Path to private key
-        --ssl-cert-file PATH         Path to certificate
-        --ssl-verify                 Enables SSL certificate verification
+## Thin
+
+For more information about Thin see [http://code.macournoyer.com/thin](http://code.macournoyer.com/thin)
+
+``` ruby
+require 'heroku/forward/backends/thin'
+
+application = File.expand_path('../my_app.ru', __FILE__)
+backend = Heroku::Forward::Backends::Thin.new(application: application, env: env)
+proxy = Heroku::Forward::Proxy::Server.new(backend, host: '0.0.0.0', port: port)
+proxy.forward!
 ```
 
-In order to forward SSL arguments to thin update your config.ru
+The Thin back-end supports the following options.
+
+* *application*: application to load
+* *env*: environment, eg. `:development`
+
+SSL is also supported.
+
+* *ssl*: enable SSL
+* *ssl-key-file*: path to private key
+* *ssl-cert-file*: path to certificate
+* *ssl-verify*: enable SSL certificate verification
 
 ```ruby
 options = { application: File.expand_path('../my_app.ru', __FILE__) }
@@ -119,15 +132,17 @@ end
 backend = Heroku::Forward::Backends::Thin.new(options)
 ```
 
-Alternative Backends
---------------------
+## Unicorn
 
-Backend implementations for both [Thin](http://code.macournoyer.com/thin) and [Unicorn](http://unicorn.bogomips.org/) are provided. Your rackup file must `require` the chosen backend in addition to `heroku-forward` and invoke as follows:
+For more information about Unicorn see [http://unicorn.bogomips.org](http://unicorn.bogomips.org/).
+
+The Unicorn back-end supports the following options.
+
+* *application*: application to load
+* *env*: environment, eg. `:development`
+* *config_file*: Unicorn configuration file
 
 ```ruby
-
-# ...
-
 require 'heroku-forward'
 require 'heroku/forward/backends/unicorn'
 
@@ -135,11 +150,8 @@ application = File.expand_path('../my_app.ru', __FILE__)
 config_file = File.expand_path('../config/unicorn.rb', __FILE__)
 backend = Heroku::Forward::Backends::Unicorn.new(application: application, env: env, config_file: config_file)
 proxy = Heroku::Forward::Proxy::Server.new(backend, host: '0.0.0.0', port: port)
-proxy.logger = Logger.new(STDOUT)
 proxy.forward!
 ```
-
-
 
 Fail-Safe
 ---------
