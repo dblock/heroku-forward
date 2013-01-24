@@ -13,11 +13,10 @@ This gem implements a proxy using [em-proxy](https://github.com/igrigorik/em-pro
 Usage
 -----
 
-Add `heroku-forward` and `em-proxy` to your `Gemfile`. Curently requires HEAD of `em-proxy` because of [this pull request](https://github.com/igrigorik/em-proxy/pull/31).
+Add `heroku-forward` to your `Gemfile`.
 
 ``` ruby
 gem "heroku-forward", "~> 0.2"
-gem "em-proxy", ">= 0.1.8"
 ```
 
 Create an application rackup file, eg. `my_app.ru` that boots your application. Under Rails, this is the file that calls `run`.
@@ -108,7 +107,7 @@ In order to forward SSL arguments to thin update your config.ru
 ```ruby
 options = { application: File.expand_path('../my_app.ru', __FILE__) }
 
-# branch to desable SSL depending of your environment
+# branch to disable SSL depending on your environment
 if ENV['THIN_SSL_ENABLED']
   options[:ssl] = true
   options[:ssl_verify] = true
