@@ -1,3 +1,8 @@
+Next Release
+============
+
+* Improve generation of temporary filename for socket - [@joeyAghion](https://github.com/joeyAghion).
+
 0.3.0
 =====
 
