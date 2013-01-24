@@ -12,5 +12,4 @@ group :development, :test do
   gem "jeweler", "~> 1.6"
   gem "thin", "~> 1.5"
   gem "em-http-request", "~> 1.0"
-  gem "mocha"
 end

@@ -1,3 +1,8 @@
+Next Release
+============
+
+* Fix: `--ssl-key-file` option causes a `thin/controllers/controller.rb:37:in 'start': wrong number of arguments (2 for 0)` error - [@dblock](https://github.com/dblock).
+
 0.2.0 (01/15/2013)
 ==================
 

@@ -5,6 +5,5 @@ require 'heroku-forward'
 require 'em-proxy'
 require 'em-http'
 require 'logger'
-require 'mocha/api'
 
 require 'support/em_server'

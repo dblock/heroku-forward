@@ -41,7 +41,7 @@ module Heroku
           spawn_with.push "--socket", @socket
           spawn_with.push "-e", @env.to_s
           spawn_with.push "--ssl" if @ssl
-          spawn_with.push " --ssl-key-file", @ssl_key_file if @ssl_key_file
+          spawn_with.push "--ssl-key-file", @ssl_key_file if @ssl_key_file
           spawn_with.push "--ssl-cert-file", @ssl_cert_file if @ssl_cert_file
           spawn_with.push "--ssl-verify" if @ssl_verify
 
