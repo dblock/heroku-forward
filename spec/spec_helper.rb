@@ -4,6 +4,5 @@ $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'heroku-forward'
 require 'em-http'
 require 'logger'
-require 'mocha/api'
 
 require 'support/em_server'

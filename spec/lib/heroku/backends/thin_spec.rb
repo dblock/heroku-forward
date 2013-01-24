@@ -54,8 +54,17 @@ describe Heroku::Forward::Backends::Thin do
     end
 
     it "forward SSL arguments on spawning" do
-      backend.expects(:spawn).with("thin start -R #{application} --socket #{socket} -e development --ssl --ssl-key-file #{mock_ssl_key_file} --ssl-cert-file #{mock_ssl_cert_file} --ssl-verify").returns(0)
-
+      cmd = []
+      cmd.push "thin"
+      cmd.push "start"
+      cmd.push "-R", application
+      cmd.push "--socket", socket
+      cmd.push "-e", "development"
+      cmd.push "--ssl"
+      cmd.push "--ssl-key-file", mock_ssl_key_file
+      cmd.push "--ssl-cert-file", mock_ssl_cert_file
+      cmd.push "--ssl-verify"
+      Spoon.should_receive(:spawnp).with(* cmd).and_return(0)
       backend.spawn!
     end
 
