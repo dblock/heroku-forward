@@ -6,7 +6,7 @@ module Heroku
         
         def initialize(options = {})
           @application = options[:application]
-          @socket = options[:socket] || new_socket
+          @socket = options[:socket] || tmp_filename('unicorn', '.sock')
           @env = options[:env] || 'development'
           @config_file = options[:config_file]
         end
@@ -38,11 +38,9 @@ module Heroku
         
         private
         
-        def new_socket
-          require 'tmpdir'
-          Dir::Tmpname.create(['unicorn', '.sock']) do |path|
-            return path
-          end
+        # Borrowed from ruby 1.9's Dir::Tmpname.make_tmpname for 1.8.7-compatibility.
+        def tmp_filename(prefix, suffix)
+          File.join Dir.tmpdir, "#{prefix}#{Time.now.strftime("%Y%m%d")}-#{$$}-#{rand(0x100000000).to_s(36)}#{suffix}"
         end
         
         def check!

@@ -36,20 +36,16 @@ describe Heroku::Forward::Backends::Unicorn do
   
   context "constructs command" do
     
-    let(:application) { "spec/support/app.ru" }
-    let(:socket) { "foobar" }
-
     let(:backend) do
       Heroku::Forward::Backends::Unicorn.new(
-        :application => application,
-        :socket => socket,
+        :application => 'spec/support/app.ru',
         :env => 'test',
-        :config_file => 'config/unicorn.rb'
+        :config_file => 'spec/support/unicorn.rb'
       )
     end
 
     it "forwards arguments to spawner" do
-      backend.expects(:spawn).with("unicorn --env test --config-file config/unicorn.rb --listen foobar spec/support/app.ru").returns(0)
+      backend.expects(:spawn).with("unicorn --env test --config-file spec/support/unicorn.rb --listen foobar spec/support/app.ru").returns(0)
       backend.spawn!
     end
 
