@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'heroku/forward/backends/thin'
 
 describe Heroku::Forward::Backends::Thin do
 
