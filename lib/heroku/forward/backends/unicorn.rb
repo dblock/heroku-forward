@@ -6,7 +6,7 @@ module Heroku
         
         def initialize(options = {})
           @application = options[:application]
-          @socket = options[:socket] || Heroku::Forward::Utils.tmp_filename('unicorn', '.sock')
+          @socket = options[:socket] || Heroku::Forward::Utils::Dir.tmp_filename('unicorn', '.sock')
           @env = options[:env] || 'development'
           @config_file = options[:config_file]
         end

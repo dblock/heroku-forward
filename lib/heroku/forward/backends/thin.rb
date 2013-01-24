@@ -22,7 +22,7 @@ module Heroku
         #  ssl_verify:    activated with  ssl_verify
         def initialize(options = {})
           @application = options[:application]
-          @socket = options[:socket] || Heroku::Forward::Utils.tmp_filename('thin', '.sock')
+          @socket = options[:socket] || Heroku::Forward::Utils::Dir.tmp_filename('thin', '.sock')
           @env = options[:env] || :development
 
           @ssl = options[:ssl] || false

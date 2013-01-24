@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Heroku::Forward::Utils do
+describe Heroku::Forward::Utils::Dir do
   
   context "#tmp_filename" do
-    let(:filename) { Heroku::Forward::Utils.tmp_filename('foo', '.bar') }
+    let(:filename) { Heroku::Forward::Utils::Dir.tmp_filename('foo', '.bar') }
     
     it "doesn't create file" do
       File.exists?(filename).should_not be_true
