@@ -1,1 +1,6 @@
-require 'heroku/forward/backends/thin'
+module Heroku
+  module Forward
+    module Backends
+    end
+  end
+end

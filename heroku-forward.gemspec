@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Daniel Doubrovkine"]
-  s.date = "2013-01-15"
+  s.date = "2013-01-24"
   s.email = "dblock@dblock.org"
   s.extra_rdoc_files = [
     "LICENSE.md",
@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
     "lib/heroku/forward.rb",
     "lib/heroku/forward/backends.rb",
     "lib/heroku/forward/backends/thin.rb",
+    "lib/heroku/forward/backends/unicorn.rb",
     "lib/heroku/forward/config/locales/en.yml",
     "lib/heroku/forward/errors.rb",
     "lib/heroku/forward/errors/backend_failed_to_start_error.rb",
@@ -49,6 +50,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<rspec>, ["~> 2.6"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.6"])
       s.add_development_dependency(%q<thin>, ["~> 1.5"])
+      s.add_development_dependency(%q<unicorn>, ["~> 4.5"])
       s.add_development_dependency(%q<em-http-request>, ["~> 1.0"])
       s.add_development_dependency(%q<mocha>, [">= 0"])
     else
@@ -61,6 +63,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<rspec>, ["~> 2.6"])
       s.add_dependency(%q<jeweler>, ["~> 1.6"])
       s.add_dependency(%q<thin>, ["~> 1.5"])
+      s.add_dependency(%q<unicorn>, ["~> 4.5"])
       s.add_dependency(%q<em-http-request>, ["~> 1.0"])
       s.add_dependency(%q<mocha>, [">= 0"])
     end
@@ -74,6 +77,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<rspec>, ["~> 2.6"])
     s.add_dependency(%q<jeweler>, ["~> 1.6"])
     s.add_dependency(%q<thin>, ["~> 1.5"])
+    s.add_dependency(%q<unicorn>, ["~> 4.5"])
     s.add_dependency(%q<em-http-request>, ["~> 1.0"])
     s.add_dependency(%q<mocha>, [">= 0"])
   end
