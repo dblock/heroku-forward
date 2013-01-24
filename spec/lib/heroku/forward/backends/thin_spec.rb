@@ -7,9 +7,17 @@ describe Heroku::Forward::Backends::Thin do
     let(:backend) do
       Heroku::Forward::Backends::Thin.new
     end
+    
+    after do
+      backend.terminate!
+    end
 
     it "#spawned?" do
       backend.spawned?.should be_false
+    end
+    
+    it "doesn't generate socket file" do
+      File.exists?(backend.socket).should_not be_true
     end
 
     context "checks" do
@@ -27,13 +35,26 @@ describe Heroku::Forward::Backends::Thin do
       end
 
     end
-
-    it "#spawn!" do
-      backend.application = "spec/support/app.ru"
-      backend.spawn!.should_not == 0
-      sleep 2
-      backend.terminate!.should be_true
+    
+    describe "#spawn!" do
+      before do
+        backend.application = "spec/support/app.ru"
+      end
+      
+      it "starts successfully" do
+        backend.spawn!.should_not == 0
+        sleep 2
+        backend.terminate!.should be_true
+      end
+      
+      it "generates socket file that outlives garbage-collection" do
+        backend.spawn!
+        sleep 2
+        lambda { GC.start }.should_not raise_error
+        File.exists?(backend.socket).should be_true
+      end
     end
+    
   end
 
   describe "with SSL" do
