@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "heroku-forward"
-  s.version = "0.3.0"
+  s.version = "0.3.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Daniel Doubrovkine"]
-  s.date = "2013-01-24"
+  s.date = "2013-01-25"
   s.email = "dblock@dblock.org"
   s.extra_rdoc_files = [
     "LICENSE.md",
@@ -29,6 +29,7 @@ Gem::Specification.new do |s|
     "lib/heroku/forward/errors/missing_backend_option_error.rb",
     "lib/heroku/forward/proxy.rb",
     "lib/heroku/forward/proxy/server.rb",
+    "lib/heroku/forward/utils/dir.rb",
     "lib/heroku/forward/version.rb"
   ]
   s.homepage = "http://github.com/dblock/heroku-forward"
