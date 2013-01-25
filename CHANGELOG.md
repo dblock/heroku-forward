@@ -1,7 +1,7 @@
-Next Release
-============
+0.3.1
+=====
 
-* Improve generation of temporary filename for socket - [@joeyAghion](https://github.com/joeyAghion).
+* [#6](https://github.com/dblock/heroku-forward/pull/6) - Fix: socket file gets deleted on garbage-collection - [@joeyAghion](https://github.com/joeyAghion).
 
 0.3.0
 =====
