@@ -52,6 +52,12 @@ proxy.forward!
 
 This sets up a proxy on the port requested by Heroku and runs your application with [Thin](http://code.macournoyer.com/thin). Other back-ends are also supported, see below.
 
+Add the following line to `config/development.rb` to see Rails logger output on `STDOUT`:
+
+```ruby
+config.middleware.use Rails::Rack::LogTailer
+```
+
 Foreman
 -------
 
