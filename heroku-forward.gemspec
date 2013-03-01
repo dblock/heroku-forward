@@ -19,8 +19,10 @@ Gem::Specification.new do |s|
     "lib/heroku-forward.rb",
     "lib/heroku/forward.rb",
     "lib/heroku/forward/backends.rb",
+    "lib/heroku/forward/backends/base.rb",
     "lib/heroku/forward/backends/thin.rb",
     "lib/heroku/forward/backends/unicorn.rb",
+    "lib/heroku/forward/backends/puma.rb",
     "lib/heroku/forward/config/locales/en.yml",
     "lib/heroku/forward/errors.rb",
     "lib/heroku/forward/errors/backend_failed_to_start_error.rb",
@@ -52,6 +54,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<jeweler>, ["~> 1.6"])
       s.add_development_dependency(%q<thin>, ["~> 1.5"])
       s.add_development_dependency(%q<unicorn>, ["~> 4.5"])
+      s.add_development_dependency(%q<puma>, ["~> 1.6"])
       s.add_development_dependency(%q<em-http-request>, ["~> 1.0"])
     else
       s.add_dependency(%q<em-proxy>, [">= 0.1.8"])
@@ -64,6 +67,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<jeweler>, ["~> 1.6"])
       s.add_dependency(%q<thin>, ["~> 1.5"])
       s.add_dependency(%q<unicorn>, ["~> 4.5"])
+      s.add_dependency(%q<puma>, ["~> 1.6"])
       s.add_dependency(%q<em-http-request>, ["~> 1.0"])
     end
   else
@@ -77,6 +81,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<jeweler>, ["~> 1.6"])
     s.add_dependency(%q<thin>, ["~> 1.5"])
     s.add_dependency(%q<unicorn>, ["~> 4.5"])
+    s.add_dependency(%q<puma>, ["~> 1.6"])
     s.add_dependency(%q<em-http-request>, ["~> 1.0"])
   end
 end
