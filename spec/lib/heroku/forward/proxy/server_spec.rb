@@ -1,16 +1,18 @@
 require 'spec_helper'
 require 'heroku/forward/backends/thin'
 require 'heroku/forward/backends/unicorn'
+require 'heroku/forward/backends/puma'
 
 describe Heroku::Forward::Proxy::Server do
 
   [
     Heroku::Forward::Backends::Thin,
-    Heroku::Forward::Backends::Unicorn
+    Heroku::Forward::Backends::Unicorn,
+    Heroku::Forward::Backends::Puma
   ].each do |backend_type|
-    
+
     context "with #{backend_type.name} backend" do
-      
+
       let(:backend) do
         backend_type.new(:application => 'spec/support/app.ru')
       end
@@ -42,7 +44,7 @@ describe Heroku::Forward::Proxy::Server do
           end
         end
       end
-      
+
     end
   end
 
