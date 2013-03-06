@@ -1,12 +1,9 @@
+require 'heroku/forward/backends/base'
+
 module Heroku
   module Forward
     module Backends
-      class Thin
-        attr_accessor :application
-        attr_accessor :socket
-        attr_accessor :environment
-        attr_accessor :pid
-
+      class Thin < Base
         attr_accessor :ssl
         attr_accessor :ssl_key_file
         attr_accessor :ssl_cert_file
@@ -48,25 +45,6 @@ module Heroku
           @pid = Spoon.spawnp(* spawn_with)
           @spawned = true
         end
-
-        def terminate!
-          return false unless spawned?
-          Process.kill 'QUIT', @pid
-          @spawned = false
-          true
-        end
-
-        def spawned?
-          !! @spawned
-        end
-
-        private
-
-        def check!
-          raise Heroku::Forward::Errors::MissingBackendOptionError.new('application') unless @application && @application.length > 0
-          raise Heroku::Forward::Errors::MissingBackendApplicationError.new(@application) unless File.exists?(@application)
-        end
-
       end
     end
   end
