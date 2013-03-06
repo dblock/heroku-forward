@@ -208,4 +208,4 @@ Copyright and License
 
 MIT License, see [LICENSE](http://github.com/dblock/heroku-forward/raw/master/LICENSE.md) for details.
 
-(c) 2012 [Daniel Doubrovkine](http://github.com/dblock), [Art.sy](http://artsy.github.com)
+(c) 2012-2013 [Daniel Doubrovkine](http://github.com/dblock), [Artsy](http://artsy.github.com)
