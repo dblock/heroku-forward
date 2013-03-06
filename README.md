@@ -161,7 +161,7 @@ proxy.forward!
 
 ### Puma
 
-For more information about Puma see [http://puma.io/](http://puma.io/).
+For more information about Puma see [http://puma.io](http://puma.io/).
 
 The Puma back-end supports the following options.
 
@@ -180,6 +180,8 @@ backend = Heroku::Forward::Backends::Puma.new(application: application, env: env
 proxy = Heroku::Forward::Proxy::Server.new(backend, host: '0.0.0.0', port: port)
 proxy.forward!
 ```
+
+Note that heroku-forward does not currently run on JRuby, see [em-proxy#39](https://github.com/igrigorik/em-proxy/issues/39) for details.
 
 Fail-Safe
 ---------
