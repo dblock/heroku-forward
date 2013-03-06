@@ -1,3 +1,8 @@
+Next Release
+============
+
+* [#13](https://github.com/dblock/heroku-forward/pull/13) - Add support for Puma back-end - [@filiptepper](https://github.com/filiptepper).
+
 0.3.1
 =====
 
