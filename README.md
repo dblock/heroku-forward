@@ -159,6 +159,28 @@ proxy = Heroku::Forward::Proxy::Server.new(backend, host: '0.0.0.0', port: port)
 proxy.forward!
 ```
 
+### Puma
+
+For more information about Puma see [http://puma.io/](http://puma.io/).
+
+The Puma back-end supports the following options.
+
+* **application**: application to load
+* **env**: environment, eg. `:development`
+* **socket**: socket, eg. `/tmp/puma.sock`
+* **config_file**: Puma configuration file
+
+```ruby
+require 'heroku-forward'
+require 'heroku/forward/backends/puma'
+
+application = File.expand_path('../my_app.ru', __FILE__)
+config_file = File.expand_path('../config/puma.rb', __FILE__)
+backend = Heroku::Forward::Backends::Puma.new(application: application, env: env, config_file: config_file)
+proxy = Heroku::Forward::Proxy::Server.new(backend, host: '0.0.0.0', port: port)
+proxy.forward!
+```
+
 Fail-Safe
 ---------
 
