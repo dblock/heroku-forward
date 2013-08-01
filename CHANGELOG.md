@@ -2,6 +2,7 @@ Next Release
 ============
 
 * [#13](https://github.com/dblock/heroku-forward/pull/13) - Add support for Puma back-end - [@filiptepper](https://github.com/filiptepper).
+* [#14](https://github.com/dblock/heroku-forward/issues/14) - Fix: uninitialized constant `Heroku::Forward::Proxy::Server::BackendFailedToStartError` on server start failure - [@joeyAghion](https://github.com/joeyAghion).
 
 0.3.1
 =====
