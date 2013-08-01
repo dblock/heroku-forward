@@ -84,7 +84,7 @@ module Heroku
                 @start = nil
               end
             rescue RuntimeError => e
-              raise BackendFailedToStartError.new if @retries <= 0
+              raise Heroku::Forward::Errors::BackendFailedToStartError.new if @retries <= 0
               logger.warn "#{e.message}, #{retries} #{retries == 1 ? 'retry' : 'retries'} left." if logger
               @retries -= 1
             end
