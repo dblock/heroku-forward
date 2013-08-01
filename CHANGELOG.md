@@ -1,16 +1,16 @@
-Next Release
-============
+0.4.0 (8/1/2013)
+================
 
 * [#13](https://github.com/dblock/heroku-forward/pull/13) - Add support for Puma back-end - [@filiptepper](https://github.com/filiptepper).
 * [#14](https://github.com/dblock/heroku-forward/issues/14) - Fix: uninitialized constant `Heroku::Forward::Proxy::Server::BackendFailedToStartError` on server start failure - [@joeyAghion](https://github.com/joeyAghion).
 
-0.3.1
-=====
+0.3.1 (1/25/2013)
+=================
 
 * [#6](https://github.com/dblock/heroku-forward/pull/6) - Fix: socket file gets deleted on garbage-collection - [@joeyAghion](https://github.com/joeyAghion).
 
-0.3.0
-=====
+0.3.0 (1/24/2013)
+=================
 
 * [#5](https://github.com/dblock/heroku-forward/pull/5) - Add support for Unicorn back-end - [@joeyAghion](https://github.com/joeyAghion).
 * Fix: `--ssl-key-file` option causes a `thin/controllers/controller.rb:37:in 'start': wrong number of arguments (2 for 0)` error - [@dblock](https://github.com/dblock).

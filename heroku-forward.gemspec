@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "heroku-forward"
-  s.version = "0.3.1"
+  s.version = "0.4.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Daniel Doubrovkine"]
-  s.date = "2013-01-25"
+  s.date = "2013-08-01"
   s.email = "dblock@dblock.org"
   s.extra_rdoc_files = [
     "LICENSE.md",
@@ -20,9 +20,9 @@ Gem::Specification.new do |s|
     "lib/heroku/forward.rb",
     "lib/heroku/forward/backends.rb",
     "lib/heroku/forward/backends/base.rb",
+    "lib/heroku/forward/backends/puma.rb",
     "lib/heroku/forward/backends/thin.rb",
     "lib/heroku/forward/backends/unicorn.rb",
-    "lib/heroku/forward/backends/puma.rb",
     "lib/heroku/forward/config/locales/en.yml",
     "lib/heroku/forward/errors.rb",
     "lib/heroku/forward/errors/backend_failed_to_start_error.rb",
@@ -37,7 +37,7 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/dblock/heroku-forward"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.24"
+  s.rubygems_version = "1.8.25"
   s.summary = "Beat Heroku's 60s boot timeout with a forward proxy."
 
   if s.respond_to? :specification_version then

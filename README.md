@@ -1,4 +1,4 @@
-Heroku::Forward [![Build Status](https://travis-ci.org/dblock/heroku-forward.png?branch=master)](https://travis-ci.org/dblock/heroku-forward)
+Heroku::Forward [![Build Status](https://travis-ci.org/dblock/heroku-forward.png?branch=master)](https://travis-ci.org/dblock/heroku-forward) [![Code Climate](https://codeclimate.com/repos/51fa634ec7f3a32cbd015aea/badges/f526a1ee8e357011f8af/gpa.png)](https://codeclimate.com/repos/51fa634ec7f3a32cbd015aea/feed)
 ===============
 
 Beat Heroku's 60 seconds timeout with a proxy.
