@@ -10,26 +10,26 @@ describe Heroku::Forward::Proxy::Server do
     Heroku::Forward::Backends::Unicorn,
     Heroku::Forward::Backends::Puma
   ].each do |backend_type|
-
+    
     context "with #{backend_type.name} backend" do
-
+      
       let(:backend) do
         backend_type.new(:application => 'spec/support/app.ru')
       end
 
       let(:server) do
-        Heroku::Forward::Proxy::Server.new(backend, { :host => '127.0.0.1', :port => 4242 })
+        Heroku::Forward::Proxy::Server.new(backend, { :host => '127.0.0.1', :port => 4242, :retries => 0 })
       end
 
-      context "spawned backend" do
+      before :each do
+        server.logger = Logger.new(STDOUT)
+      end
 
-        before :each do
-          server.logger = Logger.new(STDOUT)
-        end
+      after :each do
+        backend.terminate!
+      end
 
-        after :each do
-          backend.terminate!
-        end
+      context "forwarding" do
 
         it "proxy!" do
           EM::Server.run(server) do
@@ -43,8 +43,16 @@ describe Heroku::Forward::Proxy::Server do
             server.forward!(:delay => 2)
           end
         end
-      end
 
+      end
+      
+      it "fails" do
+        EM::ProxyServer::Connection.any_instance.stub(:server) { raise "Whoops" }
+        lambda {
+          EM::Server.run(server) { server.forward! }
+        }.should raise_error(Heroku::Forward::Errors::BackendFailedToStartError)
+      end
+    
     end
   end
 
