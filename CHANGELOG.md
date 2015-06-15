@@ -3,6 +3,7 @@ Next release
 
 * [#19](https://github.com/dblock/heroku-forward/pull/19) - Send TERM rather than QUIT to Puma cluster - [@mjtko](https://github.com/mjtko).
 * [#19](https://github.com/dblock/heroku-forward/pull/19) - Added configuration of termination signal for Puma - [@mjtko](https://github.com/mjtko).
+* Removed Jeweler - [@dblock](https://github.com/dblock).
 
 0.4.0 (8/1/2013)
 ================
