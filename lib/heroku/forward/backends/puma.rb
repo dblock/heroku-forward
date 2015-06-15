@@ -11,6 +11,7 @@ module Heroku
           @socket = options[:socket] || Heroku::Forward::Utils::Dir.tmp_filename('puma-', '.sock')
           @env = options[:env] || 'development'
           @config_file = options[:config_file]
+          @term_signal = options[:term_signal] || 'TERM'
         end
 
         def spawn!
@@ -29,7 +30,7 @@ module Heroku
 
         def terminate!
           return false unless spawned?
-          Process.kill 'QUIT', @pid
+          Process.kill @term_signal, @pid
           @spawned = false
           true
         end

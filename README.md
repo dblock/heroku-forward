@@ -169,6 +169,7 @@ The Puma back-end supports the following options.
 * **env**: environment, eg. `:development`
 * **socket**: socket, eg. `/tmp/puma.sock`
 * **config_file**: Puma configuration file
+* **term_signal**: Signal to send to Puma cluster when the backend is terminated; defaults to `TERM`
 
 ```ruby
 require 'heroku-forward'
@@ -197,6 +198,7 @@ Reading Materials
 * [eventmachine](https://github.com/eventmachine/eventmachine)
 * [em-proxy](https://github.com/igrigorik/em-proxy)
 * [Setup rails 3.2 & heroku-forward with SSL](https://gist.github.com/4540602)
+* [Puma signals](https://github.com/puma/puma/blob/master/docs/signals.md)
 
 Contributing
 ------------
