@@ -18,8 +18,8 @@ module Heroku
         private
 
         def check!
-          raise Heroku::Forward::Errors::MissingBackendOptionError.new('application') unless @application && @application.length > 0
-          raise Heroku::Forward::Errors::MissingBackendApplicationError.new(@application) unless File.exists?(@application)
+          fail Heroku::Forward::Errors::MissingBackendOptionError.new('application') unless @application && @application.length > 0
+          fail Heroku::Forward::Errors::MissingBackendApplicationError.new(@application) unless File.exist?(@application)
         end
       end
     end

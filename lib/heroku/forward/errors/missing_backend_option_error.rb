@@ -3,9 +3,7 @@ module Heroku
     module Errors
       class MissingBackendOptionError < HerokuForwardError
         def initialize(name)
-          super(compose_message("missing_backend_option", {
-            :name => name
-          }))
+          super(compose_message('missing_backend_option',             name: name))
         end
       end
     end

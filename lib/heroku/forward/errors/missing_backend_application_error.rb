@@ -3,9 +3,7 @@ module Heroku
     module Errors
       class MissingBackendApplicationError < HerokuForwardError
         def initialize(path)
-          super(compose_message("missing_backend_application", {
-            :path => path
-          }))
+          super(compose_message('missing_backend_application',             path: path))
         end
       end
     end

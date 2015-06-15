@@ -1,0 +1,7 @@
+AllCops:
+  Exclude:
+    - vendor/**
+    - .bundle
+
+inherit_from: .rubocop_todo.yml
+
